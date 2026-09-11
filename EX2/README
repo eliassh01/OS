@@ -1,0 +1,76 @@
+Aseel Ahmad,  Elias Shubeita
+EX: 2
+
+FILES:
+README -- this file
+uthreads.cpp -- uthreads cpp file
+Makefile
+
+REMARKS:
+
+ANSWERS:
+
+Part 1 - Theoretical Questions:
+
+1)
+    a) First of all, sigsetjmp() and siglongjmp() functions are used to implement non-local
+    jumps in signal handlers,
+    they are useful for handling errors or exceptions in the programs. sigsetjmp() sets a jump point
+    in the program that can be later used by siglongjmp() to return to that point of the program,
+    in other words sigsetjmp() saves the stack environment and siglongjmp() restores it.
+
+    b) The sigsetjmp() and siglongjmp() functions can be used to temporarily mask signals and prevent
+    them from interrupting a critical section of code, the sigsetjmp() function saves the signal mask
+    at the calling time, while the siglongjmp() function restores the saved signal mask after
+    returning from a signal handler.
+
+2) User-level threads are useful in implementing parallelism in applications, 
+by user-level threads we can divide the work of an application into smaller tasks.
+For example, a data processing application can use user-level threads to concurrently process
+different parts of a large data set, due to the fact that user-level threads are managed 
+entirely in user space the overhead of context switching and synchronisation is reduced.
+
+3) advantages:
+    1) Security - By creating a new process for each tab and allocating private
+    memory space for each process, Chrome is able to isolate each tab from the others.
+
+    2) Stability - By isolating each tab in its own process, Chrome is able to 
+    improve stability, for example if a tab crashes it does not affect the other tabs.
+
+    3) Simplified debugging: When each tab running in its own process, it becomes 
+    easier to debug and troubleshoot issues, as each process can be analysed separately.
+
+   disadvantages:
+    1) Resource usage - Creating a new process for each tab requires more system 
+    resources than creating a kernel-level thread for example: larger memory space,
+    system resources overhead etc.
+
+    2) Overall complexity: Managing multiple processes can be more complex than
+    managing multiple threads, as each process has its own set of system resources and
+    must be managed separately.
+
+    3) Disk usage: Each process requires its own cache and temporary files, which
+    may increase the amount of disk space used by the browser.
+
+4) we've opened the "Shotwell" application on the CS computer:
+    a) we entered "ps -A" in the shell, and returned 177178 as the Shotwell pid.
+    b) we entered "kill pid" in shell, the application Shotwell closed.
+    c) When we type on the Keyboard in shell, an interrupt is sent from the keyboard hardware
+    to the CPU. The interrupt is handled by an OS function in the interrupt vector,
+    then the OS sends a Signal to the shell allowing the shell to display the letters
+    typed on the Screen. When we want to open the application (Shotwell), we switch to kernel mode and
+    The OS allocates memory for a new process (sets up resources for the application).
+    When we type "kill pid", kill() system call in the OS is invoked. kill() sends a Signal to the 
+    process. The default Signal sent by kill() is SIGTERM, which asks the process 
+    (in our case, shotwell application) to terminate.
+
+5) Virtual time - The running time of a process as perceived by that process it can differ from real
+time due to factors such as process scheduling, CPU usage etc. Virtual time is important for tasks that 
+need to measure or control the spent time on specific operations, such as simulation and testing. An 
+example of using virtual time is measuring a thread's life cycle or measuring the amount of time spent 
+on different parts of a program's execution as a performance profiling tool.
+
+Real time -  The passed time on the system clock from the start of the process until its completion, 
+including any delays that may occur. Real time is important in several time-critical applications where 
+delays of even a few seconds can have significant consequences, An example of using real time is in a 
+live video or audio stream
