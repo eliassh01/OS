@@ -1,0 +1,87 @@
+Aseel Ahmad ,  Elias Shubeita
+EX: 1
+
+FILES:
+osm.cpp -- the osm cpp file
+README -- this file
+graph.png -- our results graph
+Makefile
+
+REMARKS:
+measurement: we ran the program functions with 10^7 iterations, 8 instructions for each iteration.
+
+ANSWERS:
+
+Assignment 1:
+
+brief description:
+
+The "WhatIDo" program performs a series of system calls to create a directory, 
+allocate memory to the process, open and read files, write to a file, and remove directories and files. 
+The program creates the "welcome_dir_1" directory then it creates the "welcome_dir_2" directory inside
+of the "welcome_dir_1" directory, allocates memory to the process,
+opens a file called "welcome_file.txt" located in the "welcome_dir_2" directory,
+reads data from a file called "localtime" located in "/etc", writes data to "welcome_file.txt",
+and removes the file and directories that were created earlier. 
+Finally, the program terminates all threads in the process and exited with 0.
+
+What does the "WhatIDo" program do in detail?
+
+after loading the program successfully, the program does the following:
+
+1) calls mkdir() to create a new directory called "welcome_dir_1" (if it doesn't already exist).
+
+2) calls mkdir() to create a new directory called "welcome_dir_2" located inside directory
+"welcome_dir_1" (if it doesn't already exist).
+
+3) calls brk(NULL) to determine the current location of the pointer in the heap.
+
+4) calls brk() with new address to increase the program break (allocates memory to the process).
+
+5) calls openat() to open the file "welcome_file.txt" as write only located in 
+"./welcome_dir_1/welcome_dir_2", creates the file if it doesn't exist, truncates
+the file's length to 0 and assigns the file descriptor to 3.
+
+6) calls openat() to open the file "localtime" as read only located in 
+"/etc", enables the close on exec flag and assigns the file descriptor to 4.
+
+7) calls fstat() to get information about the file with fd 4:
+    * the file is a regular file with permissions 0644.
+    * the file's size is 2388 bytes.
+
+8) calls fstat() to get information about the file with fd 4:
+    * the file is a regular file with permissions 0644.
+    * the file's size is 2388 bytes.   
+
+9) calls read() to read up to 4096 bytes from the file with fd 4 and stores
+   the data (2388 bytes) that have been read into the buffer.
+
+10) calls lseek() to reposition the file offset of the file with fd 4 to its current location
+2388 plus -1506 bytes, ie the file offset will be updated to 882.
+
+11) calls read() to read up to 4096 bytes from the file with fd 4 and stores
+    the data (1506 bytes) that have been read into the buffer.
+
+12) calls close() to close the file with fd 4 and returns 4 to the OS.
+
+13) calls fstat() to get information about the file with fd 3:
+    * the file is a regular file with permissions 0644.
+    * the file's size is 0 bytes.
+
+14) calls write() to write up to 18 bytes from the buffer to the file with fd 3.
+
+15) calls close() to close the file with fd 3 and returns 3 to the OS.
+
+16) calls unlink() to remove the reference to "welcome_file.txt" (removes the file).
+
+17) calls unlink() to remove the reference to "welcome_dir_2", it returns -1 because
+the pathname refers to a directory.
+
+18) calls rmdir() to remove the directory "welcome_dir_2".
+
+19) calls unlink() to remove the reference to "welcome_dir_1", it returns -1 because
+the pathname refers to a directory.
+
+20) calls rmdir() to remove the directory "welcome_dir_1".
+
+21) calls exit_group(0) to terminate all threads in this process.
